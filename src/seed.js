@@ -34,18 +34,13 @@ async function main() {
   console.log('Seeding sweets...');
 
   for (const sweet of sweetsData) {
-    await prisma.sweet.upsert({
-      where: {
-        name_category: {
-          name: sweet.name,
-          category: sweet.category
-        }
-      },
-      update: {
-        price: (sweet.price * 10).toFixed(0),
+    await prisma.sweet.create({
+      data: {
+        name: sweet.name,
+        category: sweet.category,
+        price: sweet.price * 10,
         quantity: sweet.quantity
-      },
-      create: sweet
+      }
     });
   }
 

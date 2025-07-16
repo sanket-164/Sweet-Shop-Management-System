@@ -10,5 +10,5 @@ export const errorHandler = (error: Error, req: Request, res: Response, next: Ne
     if (error instanceof Error) errMsg = error.message;
     if (isHttpError(error)) statusCode = error.status;
 
-    res.status(statusCode).json({ message: errMsg });
+    res.status(statusCode).json({ error: errMsg });
 }

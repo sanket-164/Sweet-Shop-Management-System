@@ -16,7 +16,9 @@ model User {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
-  purchases  Purchase[]
+  orders      Order[]
+
+  @@index([email])
 }
 
 model Sweet {
@@ -28,24 +30,34 @@ model Sweet {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
-  purchases  Purchase[]
+  orderItems OrderItem[]
   restocks   Restock[]
 
   @@index([category])
 }
 
-model Purchase {
+model Order {
   id          Int       @id @default(autoincrement())
-  sweet       Sweet     @relation(fields: [sweetId], references: [id], onDelete: Cascade)
-  sweetId     Int
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
-  quantity    Int
-  priceEach   Decimal   @db.Decimal(10, 2)
-  totalPrice  Decimal   @db.Decimal(10, 2)
+  totalPrice  Int
   purchasedAt DateTime  @default(now())
 
+  orderItems OrderItem[]
+
   @@index([userId])
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   Int
+  sweet     Sweet    @relation(fields: [sweetId], references: [id], onDelete: Cascade)
+  sweetId   Int
+  quantity  Int
+  price     Int
+
+  @@index([orderId])
   @@index([sweetId])
 }
 

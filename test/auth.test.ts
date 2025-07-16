@@ -20,13 +20,13 @@ describe('Authentication', () => {
     test('should not register a user with missing fields', async () => {
         const res = await request(server).post('/auth/register').send({ email: user.email, password: user.password });
         expect(res.status).toBe(400);
-        expect(res.body.message).toBe("All fields are required");
+        expect(res.body.error).toBe("All fields are required");
     });
 
     test('should not register a user that already exists', async () => {
         const res = await request(server).post('/auth/register').send(user);
         expect(res.status).toBe(409);
-        expect(res.body.message).toBe("User already exists");
+        expect(res.body.error).toBe("User already exists");
     });
 
     test('should login with valid credentials', async () => {
@@ -37,6 +37,6 @@ describe('Authentication', () => {
     test('should not login with invalid credentials', async () => {
         const res = await request(server).post('/auth/login').send({ email: user.email, password: 'password' });
         expect(res.status).toBe(401);
-        expect(res.body.message).toBe("Invalid credentials");
+        expect(res.body.error).toBe("Invalid credentials");
     });
 });
