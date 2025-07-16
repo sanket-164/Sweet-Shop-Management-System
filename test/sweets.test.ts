@@ -6,7 +6,7 @@ describe('Sweets API Tests', () => {
 
     let newSweetId = 0;
 
-    test('POST /sweets should create a new sweet', async () => {
+    test('should create a new sweet', async () => {
         const newSweet = { name: 'Chocolate Bar', price: 10, category: 'Chocolate', quantity: 100 };
         const response = await request(server)
         .post('/sweets')
@@ -21,7 +21,7 @@ describe('Sweets API Tests', () => {
         newSweetId = response.body.id; // Store the ID for later tests
     });
 
-    test('POST /sweets should return 400 for invalid data', async () => {
+    test('should return 400 for invalid data', async () => {
         const invalidSweet = { name: '', price: -5, category: 'Chocolate', quantity: -10 };
         const response = await request(server)
         .post('/sweets')
@@ -30,7 +30,7 @@ describe('Sweets API Tests', () => {
         expect(response.status).toBe(400);
     });
 
-    test('POST /sweets should return 400 for missing fields', async () => {
+    test('should return 400 for missing fields', async () => {
         const incompleteSweet = { name: 'Chocolate Candy' }; // Missing price, category, and quantity
         const response = await request(server)
         .post('/sweets')
@@ -38,24 +38,24 @@ describe('Sweets API Tests', () => {
         expect(response.status).toBe(400);
     });
 
-    test('GET /sweets should return a list of sweets', async () => {
+    test('should return a list of sweets', async () => {
         const response = await request(server).get('/sweets');
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
     });
 
-    test('GET /sweets/:id should return a specific sweet', async () => {
+    test('should return a specific sweet', async () => {
         const response = await request(server).get(`/sweets/${newSweetId}`);
         expect(response.status).toBe(200);
         expect(response.body.id).toBe(newSweetId);
     });
 
-    test('GET /sweets/:id should return 404 for non-existing sweet', async () => {
+    test('should return 404 for non-existing sweet', async () => {
         const response = await request(server).get('/sweets/9999'); // Assuming 9999 does not exist
         expect(response.status).toBe(404);
     });
 
-    test('PUT /sweets/:id should update a specific sweet', async () => {
+    test('should update a specific sweet', async () => {
         const updatedSweet = { name: 'Vanilla Chocolate', price: 2.0, category: 'Chocolate', quantity: 50 };
         const response = await request(server)
         .put(`/sweets/${newSweetId}`)
@@ -68,7 +68,7 @@ describe('Sweets API Tests', () => {
         expect(parseInt(response.body.quantity)).toBe(updatedSweet.quantity);
     });
 
-    test('PUT /sweets/:id should return 404 for non-existing sweet', async () => {
+    test('should return 404 for non-existing sweet', async () => {
         const updatedSweet = { name: 'Non-Existent Sweet', price: 5, category: 'Candy', quantity: 20 };
         const response = await request(server)
         .put('/sweets/9999') // Assuming 9999 does not exist
@@ -77,7 +77,7 @@ describe('Sweets API Tests', () => {
         expect(response.status).toBe(404);
     });
 
-    test('PUT /sweets/:id should return 400 for invalid data', async () => {
+    test('should return 400 for invalid data', async () => {
         const invalidSweet = { name: '', price: -5, category: 'Chocolate', quantity: -10 };
         const response = await request(server)
         .put(`/sweets/${newSweetId}`)
@@ -86,13 +86,45 @@ describe('Sweets API Tests', () => {
         expect(response.status).toBe(400);
     });
 
-    test('DELETE /sweets/:id should delete a specific sweet', async () => {
+    test('should restock a sweet', async () => {
+        const restockData = { quantity: 50 };
+        const response = await request(server)
+        .post(`/sweets/restock/${newSweetId}`)
+        .send(restockData);
+
+        expect(response.status).toBe(200);
+    });
+
+    test('should return 404 for non-existing sweet restock', async () => {
+        const restockData = { quantity: 50 };
+        const response = await request(server)
+        .post('/sweets/restock/9999')
+        .send(restockData);
+
+        expect(response.status).toBe(404);
+    });
+
+    test('should return 400 for invalid restock data', async () => {
+        const restockData = { quantity: -10 };
+        const response = await request(server)
+        .post(`/sweets/restock/${newSweetId}`)
+        .send(restockData);
+
+        expect(response.status).toBe(400);
+    });
+
+    test('should return restocking history', async () => {
+        const response = await request(server).get(`/sweets/restock`);
+        expect(response.status).toBe(200); 
+    });
+
+    test('should delete a specific sweet', async () => {
         const response = await request(server).delete(`/sweets/${newSweetId}`);
         expect(response.status).toBe(204);
         expect(response.body).toEqual({}); // Expect no content on successful delete
     });
 
-    test('DELETE /sweets/:id should return 404 for non-existing sweet', async () => {
+    test('should return 404 for non-existing sweet', async () => {
         const response = await request(server).delete('/sweets/9999')
         expect(response.status).toBe(404);
     });
