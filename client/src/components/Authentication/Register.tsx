@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { register } from '../../api/auth';
 
 
@@ -80,7 +80,7 @@ const Register: React.FC = () => {
             </button>
           </form>
           <div className="text-center mt-3">
-            <a href="/login" className="text-decoration-none">Already have an account? Login</a>
+            <Link to="/login" className="text-decoration-none">Already have an account? Login</Link>
           </div>
         </div>
       </div>

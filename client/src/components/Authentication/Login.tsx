@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { login } from '../../api/auth';
 
@@ -63,7 +64,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn }) => {
             </button>
           </form>
           <div className="text-center mt-3">
-            <a href="/register" className="text-decoration-none">Don't have an account? Register</a>
+            <Link to="/register" className="text-decoration-none">Don't have an account? Register</Link>
           </div>
         </div>
       </div>
