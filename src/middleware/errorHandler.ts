@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { isHttpError } from "http-errors";
 
 export const errorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
-    // console.log(error);
+    console.log(error.message);
 
     let errMsg = "Unknown error occured";
     let statusCode = 500;
