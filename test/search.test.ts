@@ -5,7 +5,7 @@ import app from '../src/server';
 interface Sweet {
     id: number;
     name: string;
-    price: string;
+    price: number;
     category: string;
     quantity: number;
 }
@@ -53,7 +53,7 @@ describe('Search Sweets', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
         response.body.forEach((sweet:Sweet) => {
-            expect(parseInt(sweet.price)).toBeGreaterThanOrEqual(minPrice);
+            expect(sweet.price).toBeGreaterThanOrEqual(minPrice);
         });
     });
 
@@ -65,7 +65,7 @@ describe('Search Sweets', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
         response.body.forEach((sweet:Sweet) => {
-            expect(parseInt(sweet.price)).toBeLessThanOrEqual(maxPrice);
+            expect(sweet.price).toBeLessThanOrEqual(maxPrice);
         });
     });
 
@@ -77,8 +77,8 @@ describe('Search Sweets', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
         response.body.forEach((sweet:Sweet) => {
-            expect(parseInt(sweet.price)).toBeGreaterThanOrEqual(minPrice);
-            expect(parseInt(sweet.price)).toBeLessThanOrEqual(maxPrice);
+            expect(sweet.price).toBeGreaterThanOrEqual(minPrice);
+            expect(sweet.price).toBeLessThanOrEqual(maxPrice);
         });
     });
 
@@ -92,8 +92,8 @@ describe('Search Sweets', () => {
         response.body.forEach((sweet:Sweet) => {
             expect(sweet.name.toLowerCase()).toContain('chocolate');
             expect(sweet.category.toLowerCase()).toContain('chocolate');
-            expect(parseInt(sweet.price)).toBeGreaterThanOrEqual(minPrice);
-            expect(parseInt(sweet.price)).toBeLessThanOrEqual(maxPrice);
+            expect(sweet.price).toBeGreaterThanOrEqual(minPrice);
+            expect(sweet.price).toBeLessThanOrEqual(maxPrice);
         });
     });
 });

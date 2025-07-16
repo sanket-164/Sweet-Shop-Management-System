@@ -112,11 +112,7 @@ export const deleteSweet = async (req: Request, res: Response, next: NextFunctio
 };
 
 export const searchSweets = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.query);
-    
-    const { name, category, minPrice, maxPrice } = req.query;
-
-    console.log(name, category, minPrice, maxPrice);
+    const { name, category, minPrice, maxPrice, orderBy, orderDirection } = req.query;
 
     try {
         const query: any = {};
@@ -139,9 +135,25 @@ export const searchSweets = async (req: Request, res: Response, next: NextFuncti
             if (maxPrice) query.price.lte = Number(maxPrice);
         }
 
+        let order;
+
+        if (orderBy && orderDirection) {
+            order = {
+                [String(orderBy)]: String(orderDirection).toLowerCase() === 'asc' ? 'asc' : 'desc'
+            };
+        } else if (orderBy) {
+            order = {
+                [String(orderBy)]: 'asc' // Default to ascending order
+            };
+        } else {
+            order = {
+                [String('id')]: 'asc' // Default order by id
+            };
+        }
 
         const sweets = await prisma.sweet.findMany({
-            where: query
+            where: query,
+            orderBy: order
         });
 
         res.status(200).json(sweets);

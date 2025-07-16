@@ -23,7 +23,7 @@ model Sweet {
   id         Int        @id @default(autoincrement())
   name       String
   category   String
-  price      Decimal    @db.Decimal(10, 2)
+  price      Int
   quantity   Int
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
@@ -31,7 +31,6 @@ model Sweet {
   purchases  Purchase[]
   restocks   Restock[]
 
-  @@unique([name, category])
   @@index([category])
 }
 

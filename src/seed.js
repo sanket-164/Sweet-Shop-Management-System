@@ -42,7 +42,7 @@ async function main() {
         }
       },
       update: {
-        price: sweet.price * 10,
+        price: (sweet.price * 10).toFixed(0),
         quantity: sweet.quantity
       },
       create: sweet

@@ -5,7 +5,7 @@ import app from '../src/server';
 interface Sweet {
     id: number;
     name: string;
-    price: string;
+    price: number;
     category: string;
     quantity: number;
 }
@@ -42,7 +42,7 @@ describe('Search Sweets', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
-        const prices = response.body.map((sweet:Sweet) => parseInt(sweet.price));
+        const prices = response.body.map((sweet:Sweet) => sweet.price);
         const sortedPrices = [...prices].sort((a, b) => a - b);
         expect(prices).toEqual(sortedPrices);
     });
@@ -54,7 +54,7 @@ describe('Search Sweets', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
-        const prices = response.body.map((sweet:Sweet) => parseInt(sweet.price));
+        const prices = response.body.map((sweet:Sweet) => sweet.price);
         const sortedPrices = [...prices].sort((a, b) => b - a);
         expect(prices).toEqual(sortedPrices);
     });
