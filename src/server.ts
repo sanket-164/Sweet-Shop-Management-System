@@ -5,6 +5,7 @@ import createHttpError from 'http-errors';
 const app = express();
 
 import { errorHandler } from './middleware/errorHandler';
+import router from './routes/authRoutes';
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +18,8 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
+
+app.use('/auth', router);
 
 app.use((req, res, next) => {
     next(createHttpError(404, req.url + " URL not found"));
