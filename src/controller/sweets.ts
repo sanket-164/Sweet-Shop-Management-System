@@ -7,7 +7,7 @@ export const getAllSweets = async (req: Request, res: Response, next: NextFuncti
         const sweets = await prisma.sweet.findMany();
         res.status(200).json(sweets);
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
 
@@ -25,7 +25,7 @@ export const getSweetById = async (req: Request, res: Response, next: NextFuncti
 
         res.status(200).json(sweet);
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
 
@@ -46,7 +46,7 @@ export const addSweet = async (req: Request, res: Response, next: NextFunction) 
         });
         res.status(201).json(sweet);
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
 
@@ -84,7 +84,7 @@ export const updateSweet = async (req: Request, res: Response, next: NextFunctio
 
         res.status(200).json(updatedSweet);
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
 
@@ -107,6 +107,45 @@ export const deleteSweet = async (req: Request, res: Response, next: NextFunctio
         
         res.status(204).send();
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
+    }
+};
+
+export const searchSweets = async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.query);
+    
+    const { name, category, minPrice, maxPrice } = req.query;
+
+    console.log(name, category, minPrice, maxPrice);
+
+    try {
+        const query: any = {};
+
+        if (name) {
+            query.name = {
+                contains: String(name),
+            };
+        }
+
+        if (category) {
+            query.category = {
+                contains: String(category),
+            };
+        }
+
+        if (minPrice || maxPrice) {
+            query.price = {};
+            if (minPrice) query.price.gte = Number(minPrice);
+            if (maxPrice) query.price.lte = Number(maxPrice);
+        }
+
+
+        const sweets = await prisma.sweet.findMany({
+            where: query
+        });
+
+        res.status(200).json(sweets);
+    } catch (error) {
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };

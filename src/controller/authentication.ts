@@ -31,7 +31,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
 
         res.status(201).json(userWithoutPassword);
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
 
@@ -60,6 +60,6 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         // You would generate a JWT token here in real apps
         res.status(200).json({ message: "Login successful" });
     } catch (error) {
-        next(createHttpError(500, "Internal Server Error"));
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
