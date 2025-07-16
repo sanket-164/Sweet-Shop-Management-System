@@ -161,3 +161,52 @@ export const searchSweets = async (req: Request, res: Response, next: NextFuncti
         next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }
 };
+
+export const restockSweet = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { quantity } = req.body;
+
+    if (!quantity || quantity < 0) {
+        return next(createHttpError(400, "Quantity must be a positive number"));
+    }
+
+    try {
+        const sweet = await prisma.sweets.findUnique({
+            where: { id: Number(id) }
+        });
+
+        if (!sweet) {
+            return next(createHttpError(404, "Sweet not found"));
+        }
+
+        const updatedSweet = await prisma.sweets.update({
+            where: { id: Number(id) },
+            data: { quantity: sweet.quantity + quantity }
+        });
+
+        await prisma.restocks.create({
+            data: {
+                sweetId: updatedSweet.id,
+                quantity: quantity
+            }
+        });
+
+        res.status(200).json(updatedSweet);
+    } catch (error) {
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
+    }
+};
+
+export const getRestocks = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const restocks = await prisma.restocks.findMany({
+            include: {
+                sweet: true
+            }
+        });
+        
+        res.status(200).json(restocks);
+    } catch (error) {
+        next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
+    }
+};
