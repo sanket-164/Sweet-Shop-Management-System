@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login } from '../../api/authentication';
+import { login } from '../../api/auth';
 
 type LoginProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
