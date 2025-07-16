@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id         Int        @id @default(autoincrement())
   name       String
   email      String     @unique
@@ -16,12 +16,12 @@ model User {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
-  orders      Order[]
+  orders      Orders[]
 
   @@index([email])
 }
 
-model Sweet {
+model Sweets {
   id         Int        @id @default(autoincrement())
   name       String
   category   String
@@ -30,29 +30,29 @@ model Sweet {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
-  orderItems OrderItem[]
-  restocks   Restock[]
+  orderItems OrderItems[]
+  restocks   Restocks[]
 
   @@index([category])
 }
 
-model Order {
+model Orders {
   id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   totalPrice  Int
   purchasedAt DateTime  @default(now())
 
-  orderItems OrderItem[]
+  orderItems OrderItems[]
 
   @@index([userId])
 }
 
-model OrderItem {
+model OrderItems {
   id        Int      @id @default(autoincrement())
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order     Orders    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId   Int
-  sweet     Sweet    @relation(fields: [sweetId], references: [id], onDelete: Cascade)
+  sweet     Sweets    @relation(fields: [sweetId], references: [id], onDelete: Cascade)
   sweetId   Int
   quantity  Int
   price     Int
@@ -61,9 +61,9 @@ model OrderItem {
   @@index([sweetId])
 }
 
-model Restock {
+model Restocks {
   id          Int       @id @default(autoincrement())
-  sweet       Sweet     @relation(fields: [sweetId], references: [id], onDelete: Cascade)
+  sweet       Sweets     @relation(fields: [sweetId], references: [id], onDelete: Cascade)
   sweetId     Int
   quantity    Int
   restockedAt DateTime  @default(now())

@@ -4,7 +4,7 @@ import prisma from "../database";
 
 export const getAllSweets = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const sweets = await prisma.sweet.findMany();
+        const sweets = await prisma.sweets.findMany();
         res.status(200).json(sweets);
     } catch (error) {
         next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
@@ -15,7 +15,7 @@ export const getSweetById = async (req: Request, res: Response, next: NextFuncti
     const { id } = req.params;
 
     try {
-        const sweet = await prisma.sweet.findUnique({
+        const sweet = await prisma.sweets.findUnique({
             where: { id: Number(id) }
         });
 
@@ -41,7 +41,7 @@ export const addSweet = async (req: Request, res: Response, next: NextFunction) 
     }
 
     try {
-        const sweet = await prisma.sweet.create({
+        const sweet = await prisma.sweets.create({
             data: { name, price, category, quantity }
         });
         res.status(201).json(sweet);
@@ -64,7 +64,7 @@ export const updateSweet = async (req: Request, res: Response, next: NextFunctio
 
     try {
 
-        const sweet = await prisma.sweet.findUnique({
+        const sweet = await prisma.sweets.findUnique({
             where: { id: Number(id) }
         });
 
@@ -77,7 +77,7 @@ export const updateSweet = async (req: Request, res: Response, next: NextFunctio
         sweet.category = category;
         sweet.quantity = quantity;
 
-        const updatedSweet = await prisma.sweet.update({
+        const updatedSweet = await prisma.sweets.update({
             where: { id: Number(id) },
             data: sweet
         });
@@ -93,7 +93,7 @@ export const deleteSweet = async (req: Request, res: Response, next: NextFunctio
 
     try {
         
-        const sweet = await prisma.sweet.findUnique({
+        const sweet = await prisma.sweets.findUnique({
             where: { id: Number(id) }
         });
 
@@ -101,7 +101,7 @@ export const deleteSweet = async (req: Request, res: Response, next: NextFunctio
             return next(createHttpError(404, "Sweet not found"));
         }
 
-        await prisma.sweet.delete({
+        await prisma.sweets.delete({
             where: { id: Number(id) }
         });
         
@@ -151,7 +151,7 @@ export const searchSweets = async (req: Request, res: Response, next: NextFuncti
             };
         }
 
-        const sweets = await prisma.sweet.findMany({
+        const sweets = await prisma.sweets.findMany({
             where: query,
             orderBy: order
         });

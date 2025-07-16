@@ -34,7 +34,7 @@ async function main() {
   console.log('Seeding sweets...');
 
   for (const sweet of sweetsData) {
-    await prisma.sweet.create({
+    await prisma.sweets.create({
       data: {
         name: sweet.name,
         category: sweet.category,
