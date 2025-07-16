@@ -4,14 +4,14 @@ import app from '../src/server';
 
 interface Sweet {
     id: number;
-    name: String;
-    price: number;
+    name: string;
+    price: string;
     category: string;
     quantity: number;
 }
 
-const minPrice = 100;
-const maxPrice = 200;
+const minPrice = 10;
+const maxPrice = 20;
 
 describe('Search Sweets', () => {
     test('should return all sweets when no query is provided', async () => {
@@ -53,7 +53,7 @@ describe('Search Sweets', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
         response.body.forEach((sweet:Sweet) => {
-            expect(sweet.price).toBeGreaterThanOrEqual(minPrice);
+            expect(parseInt(sweet.price)).toBeGreaterThanOrEqual(minPrice);
         });
     });
 
@@ -65,7 +65,7 @@ describe('Search Sweets', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
         response.body.forEach((sweet:Sweet) => {
-            expect(sweet.price).toBeLessThanOrEqual(maxPrice);
+            expect(parseInt(sweet.price)).toBeLessThanOrEqual(maxPrice);
         });
     });
 
@@ -77,8 +77,23 @@ describe('Search Sweets', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
         response.body.forEach((sweet:Sweet) => {
-            expect(sweet.price).toBeGreaterThanOrEqual(minPrice);
-            expect(sweet.price).toBeLessThanOrEqual(maxPrice);
+            expect(parseInt(sweet.price)).toBeGreaterThanOrEqual(minPrice);
+            expect(parseInt(sweet.price)).toBeLessThanOrEqual(maxPrice);
+        });
+    });
+
+    test('should return sweets matching multiple criteria', async () => {
+        const response = await request(app)
+            .get('/sweets/search')
+            .query({ name: 'chocolate', category: 'chocolate', minPrice: minPrice, maxPrice: maxPrice });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toBeInstanceOf(Array);
+        response.body.forEach((sweet:Sweet) => {
+            expect(sweet.name.toLowerCase()).toContain('chocolate');
+            expect(sweet.category.toLowerCase()).toContain('chocolate');
+            expect(parseInt(sweet.price)).toBeGreaterThanOrEqual(minPrice);
+            expect(parseInt(sweet.price)).toBeLessThanOrEqual(maxPrice);
         });
     });
 });
