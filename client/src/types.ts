@@ -31,3 +31,11 @@ export type Order = {
   purchasedAt: string;
   orderItems: OrderItem[];
 }
+
+export type Restock = {
+  id: number;
+  sweetId: number;
+  quantity: number;
+  restockedAt: string;
+  sweet: Sweet;
+}

@@ -11,3 +11,4 @@ export const updateSweet = (id: number, name: String, price: number, category: S
 export const deleteSweet = (id: number) => sweetsAPI.delete(`/${id}`, {});
 export const searchSweets = (query: string) => sweetsAPI.get(`/search?${query}`);
 export const restockSweet = (id: number, quantity: number) => sweetsAPI.post(`/restock/${id}`, { quantity });
+export const getRestocks = () => sweetsAPI.get('/restocks', {});

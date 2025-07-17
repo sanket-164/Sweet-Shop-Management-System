@@ -7,7 +7,7 @@ router.post('/', addSweet);
 
 router.get('/', getAllSweets);
 router.get('/search', searchSweets);
-router.get('/restock', getRestocks);
+router.get('/restocks', getRestocks);
 
 router.get('/:id', getSweetById);
 router.put('/:id', updateSweet);
