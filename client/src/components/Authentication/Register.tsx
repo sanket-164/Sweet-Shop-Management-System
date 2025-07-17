@@ -80,7 +80,7 @@ const Register: React.FC = () => {
             </button>
           </form>
           <div className="text-center mt-3">
-            <Link to="/login" className="text-decoration-none">Already have an account? Login</Link>
+            <Link to="/" className="text-decoration-none">Already have an account? Login</Link>
           </div>
         </div>
       </div>

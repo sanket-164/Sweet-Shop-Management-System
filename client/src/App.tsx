@@ -6,12 +6,14 @@ import User from './components/User/Index';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   return (
     <>
       <BrowserRouter>
-          {!loggedIn && <Authentication setLoggedIn={setLoggedIn}/>}
-          {loggedIn && <User />}
+          {!loggedIn && <Authentication setLoggedIn={setLoggedIn} setAdmin={setAdmin} />}
+          {loggedIn && !admin && <User setLoggedIn={setLoggedIn} />}
+          {admin && <div>Admin Panel</div>}
       </BrowserRouter>
     </>
   )

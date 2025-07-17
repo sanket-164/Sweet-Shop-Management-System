@@ -57,8 +57,10 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             return next(createHttpError(401, "Invalid credentials"));
         }
 
+        const { password: _, ...userWithoutPassword } = user;
+
         // You would generate a JWT token here in real apps
-        res.status(200).json({ message: "Login successful" });
+        res.status(200).json(userWithoutPassword);
     } catch (error) {
         next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
     }

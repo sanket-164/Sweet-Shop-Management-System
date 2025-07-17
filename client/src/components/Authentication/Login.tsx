@@ -4,9 +4,10 @@ import { login } from '../../api/auth';
 
 type LoginProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setAdmin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Login: React.FC<LoginProps> = ({ setLoggedIn }) => {
+const Login: React.FC<LoginProps> = ({ setLoggedIn, setAdmin }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -22,6 +23,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn }) => {
     login(email, password)
       .then((response) => {
         console.log('Login successful:', response.data);
+        setAdmin(response.data.role === 'admin');
         setLoggedIn(true);
       })
       .catch((err) => {
