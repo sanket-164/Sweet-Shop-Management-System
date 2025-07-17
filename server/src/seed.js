@@ -2,43 +2,60 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const sweetsData = [
-  // Chocolate
-  { name: 'Classic Milk Chocolate', category: 'Chocolate', price: 2.50, quantity: 100 },
-  { name: 'Dark Delight', category: 'Chocolate', price: 3.00, quantity: 80 },
-  { name: 'White Chocolate Dream', category: 'Chocolate', price: 2.75, quantity: 90 },
-  { name: 'Hazelnut Crunch', category: 'Chocolate', price: 3.50, quantity: 70 },
-  { name: 'Caramel Filled Bar', category: 'Chocolate', price: 3.20, quantity: 60 },
+  // Laddus
+  { name: 'Besan Laddu', category: 'Laddus', price: 25, quantity: 100 },
+  { name: 'Motichoor Laddu', category: 'Laddus', price: 30, quantity: 90 },
+  { name: 'Boondi Laddu', category: 'Laddus', price: 20, quantity: 110 },
 
-  // Candy
-  { name: 'Sour Gummy Worms', category: 'Candy', price: 1.50, quantity: 120 },
-  { name: 'Fruit Chewy Mix', category: 'Candy', price: 1.20, quantity: 150 },
-  { name: 'Mint Hard Candy', category: 'Candy', price: 1.00, quantity: 200 },
-  { name: 'Lollipop Swirl', category: 'Candy', price: 0.80, quantity: 180 },
-  { name: 'Rainbow Jelly Beans', category: 'Candy', price: 1.30, quantity: 140 },
+  // Barfis
+  { name: 'Kaju Katli', category: 'Barfis', price: 40, quantity: 80 },
+  { name: 'Coconut Barfi', category: 'Barfis', price: 25, quantity: 100 },
+  { name: 'Badam Barfi', category: 'Barfis', price: 35, quantity: 70 },
 
-  // Pastry
-  { name: 'Chocolate Croissant', category: 'Pastry', price: 2.20, quantity: 50 },
-  { name: 'Vanilla Cream Puff', category: 'Pastry', price: 2.00, quantity: 45 },
-  { name: 'Strawberry Danish', category: 'Pastry', price: 2.50, quantity: 40 },
-  { name: 'Apple Turnover', category: 'Pastry', price: 2.30, quantity: 55 },
-  { name: 'Blueberry Muffin', category: 'Pastry', price: 2.10, quantity: 60 },
+  // Halwas
+  { name: 'Gajar Halwa', category: 'Halwas', price: 30, quantity: 60 },
+  { name: 'Sooji Halwa', category: 'Halwas', price: 20, quantity: 90 },
+  { name: 'Moong Dal Halwa', category: 'Halwas', price: 35, quantity: 50 },
 
-  // Cookie
-  { name: 'Chocolate Chip Cookie', category: 'Cookie', price: 1.80, quantity: 100 },
-  { name: 'Oatmeal Raisin Cookie', category: 'Cookie', price: 1.60, quantity: 110 },
-  { name: 'Peanut Butter Cookie', category: 'Cookie', price: 1.70, quantity: 90 },
-  { name: 'Sugar Sprinkle Cookie', category: 'Cookie', price: 1.50, quantity: 120 }
+  // Milk-based Sweets
+  { name: 'Rasgulla', category: 'Milk-based', price: 15, quantity: 150 },
+  { name: 'Rasmalai', category: 'Milk-based', price: 35, quantity: 70 },
+  { name: 'Sandesh', category: 'Milk-based', price: 25, quantity: 80 },
+  { name: 'Cham Cham', category: 'Milk-based', price: 20, quantity: 100 },
+  { name: 'Kalakand', category: 'Milk-based', price: 30, quantity: 90 },
+
+  // Deep-Fried Sweets
+  { name: 'Jalebi', category: 'Deep-Fried', price: 15, quantity: 120 },
+  { name: 'Imarti', category: 'Deep-Fried', price: 20, quantity: 100 },
+  { name: 'Balushahi', category: 'Deep-Fried', price: 25, quantity: 80 },
+  { name: 'Malpua', category: 'Deep-Fried', price: 30, quantity: 60 },
+
+  // Bengali Sweets
+  { name: 'Mishti Doi', category: 'Bengali', price: 25, quantity: 90 },
+  { name: 'Chhena Murki', category: 'Bengali', price: 20, quantity: 100 },
+  { name: 'Rajbhog', category: 'Bengali', price: 30, quantity: 70 },
+  { name: 'Kheer Kadam', category: 'Bengali', price: 35, quantity: 60 },
+
+  // Dry Fruit Sweets
+  { name: 'Anjeer Rolls', category: 'Dry Fruit', price: 50, quantity: 40 },
+  { name: 'Khajur Pak', category: 'Dry Fruit', price: 45, quantity: 50 },
+  { name: 'Dry Fruit Katli', category: 'Dry Fruit', price: 55, quantity: 35 },
+
+  // Sugar-Free
+  { name: 'Sugar-Free Barfi', category: 'Sugar-Free', price: 40, quantity: 50 },
+  { name: 'Low-calorie Laddu', category: 'Sugar-Free', price: 35, quantity: 60 },
+  { name: 'Protein Modak', category: 'Sugar-Free', price: 45, quantity: 40 }
 ];
 
 async function main() {
-  console.log('Seeding sweets...');
+  console.log('Seeding Indian sweets...');
 
   for (const sweet of sweetsData) {
     await prisma.sweets.create({
       data: {
         name: sweet.name,
         category: sweet.category,
-        price: sweet.price * 10,
+        price: sweet.price,
         quantity: sweet.quantity
       }
     });

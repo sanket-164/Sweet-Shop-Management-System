@@ -71,7 +71,7 @@ const SweetList: React.FC = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Lollipop Swirl"
+                placeholder="e.g. Rasmalai"
                 style={{ width: '100%' }}
               />
             </div>
@@ -83,7 +83,7 @@ const SweetList: React.FC = () => {
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                placeholder="e.g. Candy"
+                placeholder="e.g. Sugar-Free"
                 style={{ width: '100%' }}
               />
             </div>

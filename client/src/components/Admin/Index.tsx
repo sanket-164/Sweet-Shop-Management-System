@@ -20,7 +20,7 @@ const Admin: React.FC<AdminProps> = ({ setLoggedIn }) => {
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">
                     <div>
-                        <Link className="navbar-brand" to="/">Sweet Shop</Link>
+                        <Link className="navbar-brand" to="/"><span style={{ fontSize: '2rem' }}>🪔</span></Link>
                         <Link className="navbar-brand" to="/sweets">Sweets</Link>
                         <Link className="navbar-brand" to="/orders">Orders</Link>
                         <Link className="navbar-brand" to="/restocks">Restocks</Link>
