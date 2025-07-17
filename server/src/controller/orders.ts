@@ -76,6 +76,7 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
 export const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const orders = await prisma.orders.findMany({
+      orderBy: { purchasedAt: 'desc' },
       include: {
         orderItems: {
           include: {

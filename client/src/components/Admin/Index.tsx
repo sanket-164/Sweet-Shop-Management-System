@@ -1,5 +1,6 @@
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import SweetList from './SweetList';
+import OrderList from './OrderList';
 
 type AdminProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,7 +32,7 @@ const Admin: React.FC<AdminProps> = ({ setLoggedIn }) => {
             <Routes>
                 <Route path='/' element={<div> Admin Dashboard </div>} />
                 <Route path='/sweets' element={<SweetList />} />
-                <Route path='/orders' element={<div> Admin Dashboard </div>} />
+                <Route path='/orders' element={<OrderList />} />
                 <Route path='/restocks' element={<div> Admin Dashboard </div>} />
             </Routes>
         </div>

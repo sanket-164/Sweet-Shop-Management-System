@@ -155,7 +155,7 @@ export const searchSweets = async (req: Request, res: Response, next: NextFuncti
             };
         } else {
             order = {
-                [String('id')]: 'asc' // Default order by id
+                [String('id')]: 'desc' // Default order by id
             };
         }
 
@@ -208,6 +208,7 @@ export const restockSweet = async (req: Request, res: Response, next: NextFuncti
 export const getRestocks = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const restocks = await prisma.restocks.findMany({
+            orderBy: { restockedAt: 'desc' },
             include: {
                 sweet: true
             }
