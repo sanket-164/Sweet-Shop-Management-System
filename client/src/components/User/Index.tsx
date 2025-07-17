@@ -7,14 +7,19 @@ const User: React.FC = () => {
         <div className='container'>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">
-                <Link className="navbar-brand" to="/">Sweet Shop</Link>
-                <div>
-                    <Link className="btn btn-outline-primary" to="/cart">Cart</Link>
-                </div>
+                    <div>
+                        <Link className="navbar-brand" to="/">Sweet Shop</Link>
+                        <Link className="navbar-brand" to="/sweets">Sweets</Link>
+                        <Link className="navbar-brand" to="/">Orders</Link>
+                    </div>
+                    <div>
+                        <Link className="btn btn-outline-primary" to="/cart">My Cart</Link>
+                    </div>
                 </div>
             </nav>
             <Routes>
                 <Route path='/' element={<SweetList />}/>
+                <Route path='/sweets' element={<SweetList />}/>
                 <Route path="/cart" element={<CartPage />} />
             </Routes>
         </div>
