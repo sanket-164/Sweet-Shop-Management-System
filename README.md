@@ -26,7 +26,7 @@ A full-stack web application for managing a sweet shop. Built with **React (Vite
 ### Clone the Repository & Navigate to Project Directory
 
 ```bash
-git clone https://github.com/your-username/sweet-shop-management.git
+git clone https://github.com/sanket-164/Sweet-Shop-Management-System.git
 cd sweet-shop-management
 ```
 
@@ -118,7 +118,54 @@ Total Tests: 41 | Passed: 41 | Failed: 0
 
 ---
 
-## 📸 Screenshots
+## Screenshots
+
+### Authentication
+
+#### Register Page
+![Register](./screenshots/Auth/Register.png)
+
+#### Login Page
+![Login](./screenshots/Auth/Login.png)
+
+---
+
+### Customer Panel
+
+#### Home Page
+![HomePage](./screenshots/Customer/HomePage.png)
+
+#### Sweets Listing
+![SweetsPage](./screenshots/Customer/SweetsPage.png)
+
+#### Filter Sweets
+![SweetFilter](./screenshots/Customer/SweetFilter.png)
+
+#### Customer Cart
+![Cart](./screenshots/Customer/Cart.png)
+
+#### Orders Page
+![Orders](./screenshots/Customer/Orders.png)
+
+---
+
+### Admin Panel
+
+#### Sweets Listing
+![SweetsPage](./screenshots/Admin/SweetsPage.png)
+
+#### Add New Sweet
+![NewSweet](./screenshots/Admin/NewSweet.png)
+
+#### Update Sweet Details
+![UpdateSweet](./screenshots/Admin/UpdateSweet.png)
+
+#### Restock Sweets
+![RestockSweet](./screenshots/Admin/RestockSweet.png)
+![Restocks](./screenshots/Admin/Restocks.png)
+
+#### Orders
+![Orders](./screenshots/Admin/Orders.png)
 
 ---
 
