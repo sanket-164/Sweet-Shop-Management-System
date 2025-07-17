@@ -8,3 +8,9 @@ export type Sweet = {
   updatedAt: string;
 };
 
+export type CartItem = {
+  sweetId: number;
+  name: string;
+  quantity: number;
+  price: number;
+};

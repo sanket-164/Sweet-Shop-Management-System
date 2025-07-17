@@ -11,7 +11,7 @@ const SweetList: React.FC = () => {
   useEffect(() => {
     getAllSweets()
       .then((response) => {
-        setSweets(response.data);
+        setSweets(response.data as Sweet[]);
         setLoading(false);
       })
       .catch((err) => {

@@ -34,6 +34,12 @@ describe('Authentication', () => {
         expect(res.status).toBe(200);
     });
 
+    test('should not login with missing fields', async () => {
+        const res = await request(server).post('/auth/login').send({ email: user.email });
+        expect(res.status).toBe(400);
+        expect(res.body.error).toBe("Email and password are required");
+    });
+
     test('should not login with invalid credentials', async () => {
         const res = await request(server).post('/auth/login').send({ email: user.email, password: 'password' });
         expect(res.status).toBe(401);
