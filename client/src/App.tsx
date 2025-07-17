@@ -12,9 +12,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-          {!loggedIn && <Authentication setLoggedIn={setLoggedIn} setAdmin={setAdmin} />}
-          {loggedIn && !admin && <User setLoggedIn={setLoggedIn} />}
-          {admin && <Admin setLoggedIn={setLoggedIn} />}
+          {loggedIn? (admin ? <Admin setLoggedIn={setLoggedIn} /> : <User setLoggedIn={setLoggedIn} />): <Authentication setLoggedIn={setLoggedIn} setAdmin={setAdmin} />}
       </BrowserRouter>
     </>
   )

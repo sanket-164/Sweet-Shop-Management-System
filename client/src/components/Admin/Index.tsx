@@ -31,7 +31,7 @@ const Admin: React.FC<AdminProps> = ({ setLoggedIn }) => {
                 </div>
             </nav>
             <Routes>
-                <Route path='/' element={<div> Admin Dashboard </div>} />
+                <Route path='/' element={<SweetList />} />
                 <Route path='/sweets' element={<SweetList />} />
                 <Route path='/orders' element={<OrderList />} />
                 <Route path='/restocks' element={<RestockList />} />

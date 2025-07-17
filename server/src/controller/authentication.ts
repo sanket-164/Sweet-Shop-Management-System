@@ -4,7 +4,7 @@ import prisma from "../database";
 import bcrypt from "bcrypt";
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
-    const { name, password, email } = req.body;
+    const { name, password, email, role } = req.body;
 
     if (!name || !password || !email) {
         return next(createHttpError(400, "All fields are required"));
@@ -23,7 +23,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await prisma.users.create({
-            data: { name, email, password: hashedPassword }
+            data: { name, email, password: hashedPassword, role: role || 'customer' }
         });
 
         // Optionally exclude the password from response
@@ -59,7 +59,6 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
         const { password: _, ...userWithoutPassword } = user;
 
-        // You would generate a JWT token here in real apps
         res.status(200).json(userWithoutPassword);
     } catch (error) {
         next(createHttpError(500, "Internal Server Error: " + (error as Error).message));

@@ -125,7 +125,7 @@ const SweetList: React.FC = () => {
         </div>
         <div className="col-md-1">
           <select className="form-select" value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
-            <option value="id">ID</option>
+            <option value="id">Recency</option>
             <option value="name">Name</option>
             <option value="price">Price</option>
             <option value="quantity">Quantity</option>

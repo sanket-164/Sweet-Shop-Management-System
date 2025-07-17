@@ -119,7 +119,7 @@ const SweetList: React.FC = () => {
                 onChange={(e) => setOrderBy(e.target.value)}
                 style={{ width: '100%' }}
               >
-                <option value="id">ID</option>
+                <option value="id">Recency</option>
                 <option value="price">Price</option>
                 <option value="name">Name</option>
                 <option value="quantity">Availability</option>

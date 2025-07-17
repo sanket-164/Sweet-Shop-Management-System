@@ -9,12 +9,10 @@ type AuthenticationProps = {
 
 const Authentication: React.FC<AuthenticationProps> = ({ setLoggedIn, setAdmin }) => {
     return (
-        <div className='container'>
-            <Routes>
-                <Route path="/" element={<Login setLoggedIn={setLoggedIn} setAdmin={setAdmin} />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
-        </div>
+        <Routes>
+            <Route path="/" element={<Login setLoggedIn={setLoggedIn} setAdmin={setAdmin} />} />
+            <Route path="/register" element={<Register />} />
+        </Routes>
     )
 }
 

@@ -62,6 +62,29 @@ async function main() {
   }
 
   console.log('Seeding completed!');
+
+
+  console.log('Inserting Admin...');
+
+  await fetch('http://localhost:3000/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: 'Admin',
+      email: 'admin@sweetshop.com',
+      password: 'admin123',
+      role: 'admin'
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Admin inserted:', data);
+    })
+    .catch(err => {
+      console.error('Error inserting admin:', err);
+    });
 }
 
 main()
