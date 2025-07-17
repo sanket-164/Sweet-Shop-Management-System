@@ -44,6 +44,14 @@ export const addSweet = async (req: Request, res: Response, next: NextFunction) 
         const sweet = await prisma.sweets.create({
             data: { name, price, category, quantity }
         });
+
+        await prisma.restocks.create({
+            data: {
+                sweetId: sweet.id,
+                quantity: quantity
+            }
+        });
+
         res.status(201).json(sweet);
     } catch (error) {
         next(createHttpError(500, "Internal Server Error: " + (error as Error).message));
