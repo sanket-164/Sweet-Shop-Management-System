@@ -7,7 +7,7 @@ type SweetProps = {
 };
 
 const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
   const [qty, setQty] = useState<number>(1);
 
   const handleAdd = () => {
@@ -19,6 +19,10 @@ const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
       quantity: qty
     });
   };
+
+  // Get already added quantity from cart
+  const cartItem = cart.find((item) => item.sweetId === sweet.id);
+  const totalAdded = cartItem ? cartItem.quantity : 0;
 
   return (
     <div className="col">
@@ -42,6 +46,13 @@ const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
               Add to Cart
             </button>
           </div>
+
+          {/* Show quantity added to cart */}
+          {totalAdded > 0 && (
+            <p className="text-success mb-0">
+              In cart: <strong>{totalAdded}</strong>
+            </p>
+          )}
         </div>
       </div>
     </div>

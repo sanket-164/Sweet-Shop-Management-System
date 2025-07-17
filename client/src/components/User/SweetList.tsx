@@ -14,7 +14,7 @@ const SweetList: React.FC = () => {
   const [minPrice, setMinPrice] = useState<string>('');
   const [maxPrice, setMaxPrice] = useState<string>('');
   const [orderBy, setOrderBy] = useState<string>('id');
-  const [orderDirection, setOrderDirection] = useState<string>('asc');
+  const [orderDirection, setOrderDirection] = useState<string>('desc');
 
   const fetchSweets = () => {
     setLoading(true);
