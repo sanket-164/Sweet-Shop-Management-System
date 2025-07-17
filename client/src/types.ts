@@ -14,3 +14,20 @@ export type CartItem = {
   quantity: number;
   price: number;
 };
+
+export type OrderItem = {
+  id: number;
+  orderId: number;
+  sweetId: number;
+  quantity: number;
+  price: number;
+  sweet: Sweet;
+}
+
+export type Order = {
+  id: number;
+  userId: number;
+  totalPrice: number;
+  purchasedAt: string;
+  orderItems: OrderItem[];
+}

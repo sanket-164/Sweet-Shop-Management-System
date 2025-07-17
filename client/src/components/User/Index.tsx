@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import SweetList from './SweetList';
 import CartPage from './CartPage';
+import OrderList from './OrderList';
 
 const User: React.FC = () => {
     return (
@@ -10,7 +11,7 @@ const User: React.FC = () => {
                     <div>
                         <Link className="navbar-brand" to="/">Sweet Shop</Link>
                         <Link className="navbar-brand" to="/sweets">Sweets</Link>
-                        <Link className="navbar-brand" to="/">Orders</Link>
+                        <Link className="navbar-brand" to="/orders">Orders</Link>
                     </div>
                     <div>
                         <Link className="btn btn-outline-primary" to="/cart">My Cart</Link>
@@ -20,6 +21,7 @@ const User: React.FC = () => {
             <Routes>
                 <Route path='/' element={<SweetList />}/>
                 <Route path='/sweets' element={<SweetList />}/>
+                <Route path="/orders" element={<OrderList />} />
                 <Route path="/cart" element={<CartPage />} />
             </Routes>
         </div>

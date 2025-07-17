@@ -104,6 +104,7 @@ export const getOrdersByUserId = async (req: Request, res: Response, next: NextF
 
     const orders = await prisma.orders.findMany({
       where: { userId: Number(userId) },
+      orderBy: { purchasedAt: 'desc' },
       include: {
         orderItems: {
           include: {

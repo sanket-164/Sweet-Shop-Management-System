@@ -6,4 +6,4 @@ const ordersAPI = axios.create({
 
 export const createOrder = (userId: number, sweets: { sweetId: number; quantity: number }[]) => ordersAPI.post('/', { userId, sweets });
 export const getOrders = () => ordersAPI.get('/', {});
-export const getOrderByUserId = (id: number) => ordersAPI.get(`/${id}`, {});
+export const getOrderByUserId = (id: number) => ordersAPI.get(`/user/${id}`, {});
