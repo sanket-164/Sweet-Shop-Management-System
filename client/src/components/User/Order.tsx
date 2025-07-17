@@ -23,8 +23,7 @@ const OrderComponent: React.FC<Props> = ({ order }) => {
             </li>
           ))}
         </ul>
-        <hr />
-        <div className="text-end fw-bold">
+        <div className="text-end fw-bold mt-4">
           Total: ₹{order.totalPrice}
         </div>
       </div>

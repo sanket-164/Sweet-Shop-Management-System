@@ -164,7 +164,6 @@ const SweetList: React.FC = () => {
           )}
           {!loading && !error && sweets.length > 0 && (
             <>
-              <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Available Sweets</h2>
               <div
                 style={{
                   display: 'grid',

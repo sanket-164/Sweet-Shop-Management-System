@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { createOrder } from '../../api/orders';
+import { useAuth } from '../../context/AuthContext';
 
 const CartPage: React.FC = () => {
   const { cart, updateQuantity, clearCart } = useCart();
   const [message, setMessage] = useState<string>('');
-
+  const { user } = useAuth();
+  
   const handleOrder = () => {
-    const userId = 1;
     const sweets = cart.map(item => ({
         sweetId: item.sweetId,
         quantity: item.quantity
     }));
 
-    createOrder(userId, sweets)
+    if (!user) {
+      setMessage('You must be logged in to place an order.');
+      return;
+    }
+
+    createOrder(user.id, sweets)
       .then(() => {
         setMessage('Order placed successfully!');
         clearCart();
@@ -60,8 +66,15 @@ const CartPage: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <div className="text-end">
+      <div className="">
         <h5>Total: ₹{cart.reduce((sum, item) => sum + item.price * item.quantity, 0)}</h5>
+        
+        {/* Clear Cart Button */}
+        <button className="btn btn-danger mt-3 me-2" onClick={clearCart}>
+          Clear Cart
+        </button>
+
+        {/* Place Order Button */}
         <button className="btn btn-success mt-3" onClick={handleOrder}>
           Place Order
         </button>

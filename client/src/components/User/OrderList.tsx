@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import type { Order } from '../../types';
 import { getOrderByUserId } from '../../api/orders';
 import OrderComponent from './Order';
+import { useAuth } from '../../context/AuthContext';
 
 const OrderList: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-
+  const { user } = useAuth();
+  
   useEffect(() => {
-    getOrderByUserId(1)
+    if (!user) {
+      return;
+    }
+
+    getOrderByUserId(user.id)
       .then((res) => {
         setOrders(res.data);
         setLoading(false);

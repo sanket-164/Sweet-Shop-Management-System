@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { login } from '../../api/auth';
+import { useAuth } from '../../context/AuthContext';
 
 type LoginProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +12,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn, setAdmin }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const { setUser } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +25,11 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn, setAdmin }) => {
     login(email, password)
       .then((response) => {
         console.log('Login successful:', response.data);
+        setUser({
+          id: response.data.id,
+          email: response.data.email,
+          role: response.data.role
+        });
         setAdmin(response.data.role === 'admin');
         setLoggedIn(true);
       })

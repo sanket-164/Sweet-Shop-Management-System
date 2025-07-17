@@ -7,7 +7,7 @@ type SweetProps = {
 };
 
 const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
-  const { cart, addToCart } = useCart();
+  const { cart, addToCart, removeFromCart } = useCart();
   const [qty, setQty] = useState<number>(1);
 
   const handleAdd = () => {
@@ -20,7 +20,10 @@ const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
     });
   };
 
-  // Get already added quantity from cart
+  const handleRemove = () => {
+    removeFromCart(sweet.id);
+  };
+
   const cartItem = cart.find((item) => item.sweetId === sweet.id);
   const totalAdded = cartItem ? cartItem.quantity : 0;
 
@@ -35,6 +38,7 @@ const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
             Available: {sweet.quantity}
           </p>
           <div className="input-group mb-2">
+            <span className="input-group-text">Qty</span>
             <input
               type="number"
               min="1"
@@ -42,14 +46,23 @@ const SweetComponent: React.FC<SweetProps> = ({ sweet }) => {
               value={qty}
               onChange={(e) => setQty(Number(e.target.value))}
             />
-            <button className="btn btn-outline-primary" onClick={handleAdd}>
-              Add to Cart
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <button className="btn btn-outline-primary w-100 me-2" onClick={handleAdd}>
+              Add
+            </button>
+            <button
+              className="btn btn-outline-danger w-100"
+              onClick={handleRemove}
+              disabled={totalAdded === 0}
+            >
+              Remove
             </button>
           </div>
 
-          {/* Show quantity added to cart */}
           {totalAdded > 0 && (
-            <p className="text-success mb-0">
+            <p className="text-success mt-2 mb-0">
               In cart: <strong>{totalAdded}</strong>
             </p>
           )}

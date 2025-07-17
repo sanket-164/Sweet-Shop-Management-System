@@ -25,7 +25,7 @@ const User: React.FC<UserProps> = ({ setLoggedIn }) => {
                         <Link className="navbar-brand" to="/orders">Orders</Link>
                     </div>
                     <div className="d-flex gap-2">
-                        <Link className="btn btn-outline-primary" to="/cart">My Cart</Link>
+                        <Link className="btn btn-outline-primary" to="/cart">Place Order</Link>
                         <button className="btn btn-outline-danger" onClick={() => {handleLogout()}}>Logout</button>
                     </div>
                 </div>
@@ -40,4 +40,4 @@ const User: React.FC<UserProps> = ({ setLoggedIn }) => {
     )
 }
 
-export default User
+export default User;
