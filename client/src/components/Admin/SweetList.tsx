@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { Sweet } from '../../types';
-import { getAllSweets, addSweet } from '../../api/sweets';
+import { addSweet, searchSweets } from '../../api/sweets';
 import SweetComponent from './Sweet';
 
 const SweetList: React.FC = () => {
@@ -9,7 +9,15 @@ const SweetList: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  // Form state
+  // Filters
+  const [nameFilter, setNameFilter] = useState<string>('');
+  const [categoryFilter, setCategoryFilter] = useState<string>('');
+  const [minPrice, setMinPrice] = useState<string>('');
+  const [maxPrice, setMaxPrice] = useState<string>('');
+  const [orderBy, setOrderBy] = useState<string>('id');
+  const [orderDirection, setOrderDirection] = useState<string>('asc');
+
+  // Form state for adding new sweet
   const [name, setName] = useState('');
   const [price, setPrice] = useState<number>(0);
   const [category, setCategory] = useState('');
@@ -17,7 +25,25 @@ const SweetList: React.FC = () => {
 
   const fetchSweets = () => {
     setLoading(true);
-    getAllSweets()
+    setError('');
+
+    const params: Record<string, any> = {
+      name: nameFilter.trim() || undefined,
+      category: categoryFilter.trim() || undefined,
+      minPrice: minPrice.trim() || undefined,
+      maxPrice: maxPrice.trim() || undefined,
+      orderBy,
+      orderDirection
+    };
+
+    const queryString = new URLSearchParams(
+      Object.entries(params).reduce((acc, [key, value]) => {
+        if (value !== undefined) acc[key] = value;
+        return acc;
+      }, {} as Record<string, string>)
+    ).toString();
+
+    searchSweets(queryString)
       .then((res) => {
         setSweets(res.data);
         setLoading(false);
@@ -43,12 +69,14 @@ const SweetList: React.FC = () => {
     }
   };
 
+  const handleFilterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchSweets();
+  };
+
   useEffect(() => {
     fetchSweets();
   }, []);
-
-  if (loading) return <div className="text-center my-5"><div className="spinner-border" /></div>;
-  if (error) return <div className="alert alert-danger">{error}</div>;
 
   return (
     <div className="container py-4">
@@ -57,7 +85,70 @@ const SweetList: React.FC = () => {
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>Add New Sweet</button>
       </div>
 
-      {sweets.length === 0 ? (
+      {/* Filters */}
+      <form className="row g-3 mb-4" onSubmit={handleFilterSubmit}>
+        <div className="col-md-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Name"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+          />
+        </div>
+        <div className="col-md-2">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Category"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          />
+        </div>
+        <div className="col-md-2">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Min Price"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
+        </div>
+        <div className="col-md-2">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Max Price"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+        </div>
+        <div className="col-md-1">
+          <select className="form-select" value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
+            <option value="id">ID</option>
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+            <option value="quantity">Quantity</option>
+          </select>
+        </div>
+        <div className="col-md-1">
+          <select className="form-select" value={orderDirection} onChange={(e) => setOrderDirection(e.target.value)}>
+            <option value="asc">Asc</option>
+            <option value="desc">Desc</option>
+          </select>
+        </div>
+        <div className="col-md-1">
+          <button type="submit" className="btn btn-secondary w-100">Filter</button>
+        </div>
+      </form>
+
+      {loading ? (
+        <div className="text-center my-5">
+          <div className="spinner-border" />
+        </div>
+      ) : error ? (
+        <div className="alert alert-danger">{error}</div>
+      ) : sweets.length === 0 ? (
         <div className="alert alert-warning">No sweets found.</div>
       ) : (
         <div className="row">
