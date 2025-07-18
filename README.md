@@ -1,4 +1,4 @@
-# 🪔 Mithai Mandir
+# Mithai Mandir  (<a href="https://sweet-shop-sanket.netlify.app/" target="__blank">**Live View**</a>)
 
 A full-stack web application for managing a sweet shop. Built with **React (Vite + TypeScript)** on the frontend and **Node.js (Express + Prisma + MySQL)** on the backend.
 
