@@ -36,6 +36,7 @@ const User: React.FC<UserProps> = ({ setLoggedIn }) => {
                 <Route path='/sweets' element={<SweetList />}/>
                 <Route path="/orders" element={<OrderList />} />
                 <Route path="/cart" element={<CartPage />} />
+                <Route path='*' element={<Home />} />
             </Routes>
         </div>
     )

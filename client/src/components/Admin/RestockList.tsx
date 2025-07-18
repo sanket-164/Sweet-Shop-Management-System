@@ -11,7 +11,7 @@ const RestockList: React.FC = () => {
   const fetchRestocks = async () => {
     try {
       const res = await getRestocks();
-      setRestocks(res.data);
+      setRestocks(res.data as Restock[]);
     } catch (err) {
       setError('Failed to fetch restocks.');
     } finally {

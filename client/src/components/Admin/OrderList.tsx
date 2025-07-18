@@ -12,7 +12,7 @@ const OrderList: React.FC = () => {
     try {
       setLoading(true);
       const res = await getOrders();
-      setOrders(res.data);
+      setOrders(res.data as Order[]);
     } catch (err) {
       setError('Failed to fetch orders');
     } finally {

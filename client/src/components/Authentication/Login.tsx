@@ -3,6 +3,12 @@ import React, { useState } from 'react';
 import { login } from '../../api/auth';
 import { useAuth } from '../../context/AuthContext';
 
+interface ResponseData {
+  id: number;
+  email: string;
+  role: 'admin' | 'user';
+}
+
 type LoginProps = {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setAdmin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,12 +31,13 @@ const Login: React.FC<LoginProps> = ({ setLoggedIn, setAdmin }) => {
     login(email, password)
       .then((response) => {
         console.log('Login successful:', response.data);
+        const userData = response.data as ResponseData;
         setUser({
-          id: response.data.id,
-          email: response.data.email,
-          role: response.data.role
+          id: userData.id,
+          email: userData.email,
+          role: userData.role
         });
-        setAdmin(response.data.role === 'admin');
+        setAdmin(userData.role === 'admin');
         setLoggedIn(true);
       })
       .catch((err) => {

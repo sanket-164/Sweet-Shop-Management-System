@@ -17,7 +17,7 @@ const OrderList: React.FC = () => {
 
     getOrderByUserId(user.id)
       .then((res) => {
-        setOrders(res.data);
+        setOrders(res.data as Order[]);
         setLoading(false);
       })
       .catch(() => {

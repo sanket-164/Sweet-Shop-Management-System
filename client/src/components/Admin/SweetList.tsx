@@ -45,7 +45,7 @@ const SweetList: React.FC = () => {
 
     searchSweets(queryString)
       .then((res) => {
-        setSweets(res.data);
+        setSweets(res.data as Sweet[]);
         setLoading(false);
       })
       .catch(() => {

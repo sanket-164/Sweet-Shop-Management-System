@@ -114,7 +114,7 @@ describe('Sweets API Tests', () => {
     });
 
     test('should return restocking history', async () => {
-        const response = await request(server).get(`/sweets/restock`);
+        const response = await request(server).get(`/sweets/restocks`);
         expect(response.status).toBe(200); 
     });
 

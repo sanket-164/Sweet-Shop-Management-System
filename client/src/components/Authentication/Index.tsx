@@ -12,6 +12,7 @@ const Authentication: React.FC<AuthenticationProps> = ({ setLoggedIn, setAdmin }
         <Routes>
             <Route path="/" element={<Login setLoggedIn={setLoggedIn} setAdmin={setAdmin} />} />
             <Route path="/register" element={<Register />} />
+            <Route path='/*' element={<Login setLoggedIn={setLoggedIn} setAdmin={setAdmin} />} />
         </Routes>
     )
 }
